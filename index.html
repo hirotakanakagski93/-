@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>おてつだいミッション</title>
+  <style>
+    :root {
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --text: #2d3748;
+      --subtext: #718096;
+      --primary: #3182ce;
+      --success: #38a169;
+      --warning: #e53e3e;
+      --border: #e2e8f0;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 20px 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      margin: 0 0 8px 0;
+      font-size: 22px;
+      color: #1a202c;
+    }
+    .header p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--subtext);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      width: 100%;
+      max-width: 420px;
+    }
+    .task-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      transition: transform 0.1s, border-color 0.1s;
+    }
+    .task-card:active {
+      transform: scale(0.98);
+      border-color: var(--primary);
+    }
+    .task-info h2 {
+      margin: 0 0 4px 0;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .task-reward {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .task-reward.highlight {
+      color: #d69e2e;
+    }
+    .btn-action {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .btn-action:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    #status-message {
+      margin-top: 18px;
+      font-weight: bold;
+      font-size: 15px;
+      min-height: 24px;
+      text-align: center;
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>今日のミッション</h1>
+    <p>おてつだいをしたらボタンをおしてね！</p>
+  </div>
+
+  <div class="grid">
+    <!-- お皿洗い -->
+    <div class="task-card">
+      <div class="task-info">
+        <h2>🍽️ お皿洗い</h2>
+        <p class="task-reward highlight">+10円（1週間継続ボーナス対象）</p>
+      </div>
+      <button class="btn-action" onclick="sendTask(this, 'お皿洗い', 10)">できた！</button>
+    </div>
+
+    <!-- 洗濯物たたむ -->
+    <div class="task-card">
+      <div class="task-info">
+        <h2>👕 洗濯物たたむ</h2>
+        <p class="task-reward">+10円</p>
+      </div>
+      <button class="btn-action" onclick="sendTask(this, '洗濯物たたむ', 10)">できた！</button>
+    </div>
+
+    <!-- お風呂洗い -->
+    <div class="task-card">
+      <div class="task-info">
+        <h2>🛁 お風呂洗い</h2>
+        <p class="task-reward">+10円</p>
+      </div>
+      <button class="btn-action" onclick="sendTask(this, 'お風呂洗い', 10)">できた！</button>
+    </div>
+
+    <!-- 料理 -->
+    <div class="task-card">
+      <div class="task-info">
+        <h2>🍳 料理</h2>
+        <p class="task-reward">+10円</p>
+      </div>
+      <button class="btn-action" onclick="sendTask(this, '料理', 10)">できた！</button>
+    </div>
+
+    <!-- ごみ捨て -->
+    <div class="task-card">
+      <div class="task-info">
+        <h2>🗑️ ごみ捨て</h2>
+        <p class="task-reward">+5円</p>
+      </div>
+      <button class="btn-action" onclick="sendTask(this, 'ごみ捨て', 5)">できた！</button>
+    </div>
+
+    <!-- トイレ掃除 -->
+    <div class="task-card">
+      <div class="task-info">
+        <h2>🚽 トイレ掃除</h2>
+        <p class="task-reward">+10円</p>
+      </div>
+      <button class="btn-action" onclick="sendTask(this, 'トイレ掃除', 10)">できた！</button>
+    </div>
+  </div>
+
+  <div id="status-message"></div>
+
+  <script>
+    // デプロイしたGASウェブアプリのURLをここに貼り付け
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbwoDETN0Vf14N8TEfyhtlwXaLMcKstAmZywZf7aIN56VvfS2RHAC4lNaFx12bCNB9WV/exec";
+
+    async function sendTask(btnElement, taskName, amount) {
+      const statusDiv = document.getElementById("status-message");
+      
+      // 連打防止のため全ボタンを一時無効化
+      const allButtons = document.querySelectorAll(".btn-action");
+      allButtons.forEach(b => b.disabled = true);
+
+      statusDiv.style.color = "var(--primary)";
+      statusDiv.innerText = `「${taskName}」をきろく中...`;
+
+      const payload = {
+        user: "こども",
+        taskName: taskName,
+        amount: amount
+      };
+
+      try {
+        await fetch(GAS_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        statusDiv.style.color = "var(--success)";
+        statusDiv.innerText = `✅ 「${taskName}」で +${amount}円 ゲット！`;
+
+        setTimeout(() => {
+          statusDiv.innerText = "";
+        }, 3000);
+
+      } catch (err) {
+        statusDiv.style.color = "var(--warning)";
+        statusDiv.innerText = "⚠️ きろくに失敗しました。もう一度おしてね。";
+        console.error(err);
+      } finally {
+        // ボタン操作を再開
+        allButtons.forEach(b => b.disabled = false);
+      }
+    }
+  </script>
+</body>
+</html>
