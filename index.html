@@ -73,7 +73,6 @@
       padding: 6px 12px;
     }
 
-    /* 保護者用エリア */
     .parent-area {
       margin-top: 30px;
       width: 100%;
@@ -99,11 +98,7 @@
       border: 1px solid #feb2b2;
       border-radius: 12px;
     }
-    .parent-panel h3 {
-      margin: 0 0 10px 0;
-      font-size: 14px;
-      color: var(--danger);
-    }
+    .parent-panel h3 { margin: 0 0 10px 0; font-size: 14px; color: var(--danger); }
     .btn-penalty {
       background: var(--danger);
       color: white;
@@ -115,81 +110,111 @@
       cursor: pointer;
       width: 100%;
     }
+    .lock-screen {
+      text-align: center;
+      margin-top: 60px;
+      padding: 24px;
+    }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <h1>今日のミッション</h1>
-    <p>おてつだいをしたらボタンをおしてね！</p>
+  <!-- 認証OK時に表示されるコンテンツ -->
+  <div id="app-container" style="display: none; width: 100%; max-width: 420px;">
+    <div class="header">
+      <h1>今日のミッション</h1>
+      <p>おてつだいをしたらボタンをおしてね！</p>
+    </div>
+
+    <div class="grid">
+      <div class="task-card">
+        <div class="task-info">
+          <h2>🍽️ お皿洗い</h2>
+          <p class="task-reward highlight">+10円（1週間継続で+100円）</p>
+        </div>
+        <button class="btn-action" onclick="sendTask(this, 'お皿洗い', 10, 'こども')">できた！</button>
+      </div>
+
+      <div class="task-card">
+        <div class="task-info">
+          <h2>👕 洗濯物たたむ</h2>
+          <p class="task-reward">+10円</p>
+        </div>
+        <button class="btn-action" onclick="sendTask(this, '洗濯物たたむ', 10, 'こども')">できた！</button>
+      </div>
+
+      <div class="task-card">
+        <div class="task-info">
+          <h2>🛁 お風呂洗い</h2>
+          <p class="task-reward">+10円</p>
+        </div>
+        <button class="btn-action" onclick="sendTask(this, 'お風呂洗い', 10, 'こども')">できた！</button>
+      </div>
+
+      <div class="task-card">
+        <div class="task-info">
+          <h2>🍳 料理</h2>
+          <p class="task-reward">+10円</p>
+        </div>
+        <button class="btn-action" onclick="sendTask(this, '料理', 10, 'こども')">できた！</button>
+      </div>
+
+      <div class="task-card">
+        <div class="task-info">
+          <h2>🗑️ ごみ捨て</h2>
+          <p class="task-reward">+5円</p>
+        </div>
+        <button class="btn-action" onclick="sendTask(this, 'ごみ捨て', 5, 'こども')">できた！</button>
+      </div>
+
+      <div class="task-card">
+        <div class="task-info">
+          <h2>🚽 トイレ掃除</h2>
+          <p class="task-reward">+10円</p>
+        </div>
+        <button class="btn-action" onclick="sendTask(this, 'トイレ掃除', 10, 'こども')">できた！</button>
+      </div>
+    </div>
+
+    <div id="status-message"></div>
+
+    <div class="parent-area">
+      <button class="btn-parent-toggle" onclick="toggleParentPanel()">🔒 保護者メニュー</button>
+      <div id="parent-panel" class="parent-panel">
+        <h3>⚠️ ペナルティ入力</h3>
+        <button class="btn-penalty" onclick="sendTask(this, 'お皿洗いサボり', -200, 'おとな')">
+          🍽️ お皿洗いをサボった（-200円）
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div class="grid">
-    <div class="task-card">
-      <div class="task-info">
-        <h2>🍽️ お皿洗い</h2>
-        <p class="task-reward highlight">+10円（1週間継続で+100円）</p>
-      </div>
-      <button class="btn-action" onclick="sendTask(this, 'お皿洗い', 10, 'こども')">できた！</button>
-    </div>
-
-    <div class="task-card">
-      <div class="task-info">
-        <h2>👕 洗濯物たたむ</h2>
-        <p class="task-reward">+10円</p>
-      </div>
-      <button class="btn-action" onclick="sendTask(this, '洗濯物たたむ', 10, 'こども')">できた！</button>
-    </div>
-
-    <div class="task-card">
-      <div class="task-info">
-        <h2>🛁 お風呂洗い</h2>
-        <p class="task-reward">+10円</p>
-      </div>
-      <button class="btn-action" onclick="sendTask(this, 'お風呂洗い', 10, 'こども')">できた！</button>
-    </div>
-
-    <div class="task-card">
-      <div class="task-info">
-        <h2>🍳 料理</h2>
-        <p class="task-reward">+10円</p>
-      </div>
-      <button class="btn-action" onclick="sendTask(this, '料理', 10, 'こども')">できた！</button>
-    </div>
-
-    <div class="task-card">
-      <div class="task-info">
-        <h2>🗑️ ごみ捨て</h2>
-        <p class="task-reward">+5円</p>
-      </div>
-      <button class="btn-action" onclick="sendTask(this, 'ごみ捨て', 5, 'こども')">できた！</button>
-    </div>
-
-    <div class="task-card">
-      <div class="task-info">
-        <h2>🚽 トイレ掃除</h2>
-        <p class="task-reward">+10円</p>
-      </div>
-      <button class="btn-action" onclick="sendTask(this, 'トイレ掃除', 10, 'こども')">できた！</button>
-    </div>
-  </div>
-
-  <div id="status-message"></div>
-
-  <!-- 保護者メニュー -->
-  <div class="parent-area">
-    <button class="btn-parent-toggle" onclick="toggleParentPanel()">🔒 保護者メニュー</button>
-    <div id="parent-panel" class="parent-panel">
-      <h3>⚠️ ペナルティ入力</h3>
-      <button class="btn-penalty" onclick="sendTask(this, 'お皿洗いサボり', -200, 'おとな')">
-        🍽️ お皿洗いをサボった（-200円）
-      </button>
-    </div>
+  <!-- 認証NG時に表示されるロック画面 -->
+  <div id="lock-screen" class="lock-screen" style="display: none;">
+    <h2>🔒 アクセス制限</h2>
+    <p style="color: var(--subtext); font-size: 14px;">正しいリンクからアクセスしてください。</p>
   </div>
 
   <script>
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbwoDETN0Vf14N8TEfyhtlwXaLMcKstAmZywZf7aIN56VvfS2RHAC4lNaFx12bCNB9WV/exec";
-    const PARENT_PIN = "1234"; // 保護者用暗証番号（自由に変更可）
+    const GAS_URL = "ここにGASのURLを貼り付け";
+    const VALID_KEY = "myfamily2026"; // 合言葉（GAS側と一致させる）
+    const PARENT_PIN = "1234";
+
+    // URLのパラメータから ?key=... を取得
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessKey = urlParams.get("key");
+
+    // 画面初期表示時の認証チェック
+    window.addEventListener("DOMContentLoaded", () => {
+      const appContainer = document.getElementById("app-container");
+      const lockScreen = document.getElementById("lock-screen");
+
+      if (accessKey === VALID_KEY) {
+        appContainer.style.display = "block";
+      } else {
+        lockScreen.style.display = "block";
+      }
+    });
 
     function toggleParentPanel() {
       const panel = document.getElementById("parent-panel");
@@ -213,7 +238,9 @@
       statusDiv.style.color = "var(--primary)";
       statusDiv.innerText = `「${taskName}」を送信中...`;
 
+      // 送信データに key を含める
       const payload = {
+        key: accessKey,
         user: user,
         taskName: taskName,
         amount: amount
