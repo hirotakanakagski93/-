@@ -134,49 +134,55 @@
           <p style="margin: 3px 0 0 0; font-size: 11px; color: #e53e3e; font-weight: 500;">
             ※流しの食器類をすべて洗わないと達成になりません
           </p>
-        </div>
-        <button class="btn-action" onclick="sendTask(this, 'お皿洗い', 10, 'こども')">できた！</button>
-      </div>
+       <div style="display: flex; gap: 8px;">
+  <button class="btn-action" style="background-color: #cbd5e0; color: #4a5568; padding: 10px; flex: 0 0 auto;" onclick="sendTask(this, 'お皿洗い', 10, 'こども', true)">昨日分</button>
+  <button class="btn-action" style="flex: 1;" onclick="sendTask(this, 'お皿洗い', 10, 'こども', false)">できた！</button>
+</div>
 
       <div class="task-card">
         <div class="task-info">
           <h2>👕 洗濯物たたむ</h2>
           <p class="task-reward">+10円</p>
-        </div>
-        <button class="btn-action" onclick="sendTask(this, '洗濯物たたむ', 10, 'こども')">できた！</button>
-      </div>
+      <div style="display: flex; gap: 8px;">
+  <button class="btn-action" style="background-color: #cbd5e0; color: #4a5568; padding: 10px; flex: 0 0 auto;" onclick="sendTask(this, 'お皿洗い', 10, 'こども', true)">昨日分</button>
+  <button class="btn-action" style="flex: 1;" onclick="sendTask(this, '洗濯物たたむ', 10, 'こども', false)">できた！</button>
+</div>
 
       <div class="task-card">
         <div class="task-info">
           <h2>🛁 お風呂洗い</h2>
           <p class="task-reward">+10円</p>
-        </div>
-        <button class="btn-action" onclick="sendTask(this, 'お風呂洗い', 10, 'こども')">できた！</button>
-      </div>
+       <div style="display: flex; gap: 8px;">
+  <button class="btn-action" style="background-color: #cbd5e0; color: #4a5568; padding: 10px; flex: 0 0 auto;" onclick="sendTask(this, 'お皿洗い', 10, 'こども', true)">昨日分</button>
+  <button class="btn-action" style="flex: 1;" onclick="sendTask(this, 'お風呂洗い', 10,, 'こども', false)">できた！</button>
+</div>
 
       <div class="task-card">
         <div class="task-info">
           <h2>🍳 料理</h2>
           <p class="task-reward">+10円</p>
-        </div>
-        <button class="btn-action" onclick="sendTask(this, '料理', 10, 'こども')">できた！</button>
-      </div>
+      <div style="display: flex; gap: 8px;">
+  <button class="btn-action" style="background-color: #cbd5e0; color: #4a5568; padding: 10px; flex: 0 0 auto;" onclick="sendTask(this, 'お皿洗い', 10, 'こども', true)">昨日分</button>
+  <button class="btn-action" style="flex: 1;" onclick="sendTask(this,'料理', 10, 'こども', false)">できた！</button>
+</div>
 
       <div class="task-card">
         <div class="task-info">
           <h2>🗑️ ごみ捨て</h2>
           <p class="task-reward">+5円</p>
-        </div>
-        <button class="btn-action" onclick="sendTask(this, 'ごみ捨て', 5, 'こども')">できた！</button>
-      </div>
+       <div style="display: flex; gap: 8px;">
+  <button class="btn-action" style="background-color: #cbd5e0; color: #4a5568; padding: 10px; flex: 0 0 auto;" onclick="sendTask(this, 'お皿洗い', 10, 'こども', true)">昨日分</button>
+  <button class="btn-action" style="flex: 1;" onclick="sendTask(this, 'ごみ捨て', 5, 'こども', false)">できた！</button>
+</div>
 
       <div class="task-card">
         <div class="task-info">
           <h2>🚽 トイレ掃除</h2>
           <p class="task-reward">+10円</p>
-        </div>
-        <button class="btn-action" onclick="sendTask(this, 'トイレ掃除', 10, 'こども')">できた！</button>
-      </div>
+       <div style="display: flex; gap: 8px;">
+  <button class="btn-action" style="background-color: #cbd5e0; color: #4a5568; padding: 10px; flex: 0 0 auto;" onclick="sendTask(this, 'お皿洗い', 10, 'こども', true)">昨日分</button>
+  <button class="btn-action" style="flex: 1;" onclick="sendTask(this, 'トイレ掃除', 10, 'こども', false)">できた！</button>
+</div>
     </div>
 
     <div id="status-message"></div>
@@ -233,7 +239,7 @@
       }
     }
 
-    async function sendTask(btnElement, taskName, amount, user) {
+    async function sendTask(btnElement, taskName, amount, user, isYesterday = false) {
       const statusDiv = document.getElementById("status-message");
       const allButtons = document.querySelectorAll(".btn-action, .btn-penalty");
       allButtons.forEach(b => b.disabled = true);
